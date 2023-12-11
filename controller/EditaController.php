@@ -1,5 +1,5 @@
 <?php
-require_once("../model/banco.php");
+require_once("../model/bancoDeDados.php");
 
 class editarController {
 
@@ -17,22 +17,28 @@ class editarController {
     }
     private function criarFormulario($id){
         $row = $this->editar->pesquisaMedicamento($id);
-        $this->nome =$row['nome'];
-        $this->laboratorio =$row['laboratorio'];
-        $this->quantidade =$row['quantidade'];
-        $this->precoCompra =$row['precoCompra'];
-        $this->precoVenda =$row['preco'];
-        $this->data =$row['data'];
-        $this->flag =$row['flag'];
-
+        if(!$row) {
+            die('Erro no Id' . $id);
+        }
+        $this->nome = $row['nome'];
+        $this->laboratorio = $row['laboratorio'];
+        $this->quantidade = $row['quantidade'];
+        $this->precoCompra = $row['precoCompra'];
+        $this->precoVenda = $row['precoVenda'];
+        $this->data = $row['data'];
+        $this->flag = $row['flag'];
+        $this->id = $id;
     }
-    public function editarFormulario($nome,$laboratorio,$quantidade,$precoCompra,$precoVenda,$data,$flag,$id){
-        if($this->editar->updateMedicamento($nome,$laboratorio,$quantidade,$precoCompra,$precoVenda,$flag,$data,$id) == TRUE){
+
+
+    public function editarFormulario($nome, $laboratorio, $quantidade, $precoCompra, $precoVenda, $data, $flag, $id){
+        if($this->editar->updateMedicamento($nome, $laboratorio, $quantidade, $precoCompra, $precoVenda, $flag, $data, $id) == TRUE){
             echo "<script>alert('Registro incluído com sucesso!');document.location='../view/index.php'</script>";
         }else{
             echo "<script>alert('Erro ao gravar registro!');history.back()</script>";
         }
     }
+
     public function getNome(){
         return $this->nome;
     }
@@ -43,10 +49,10 @@ class editarController {
         return $this->quantidade;
     }
     public function getPrecoCompra(){
-        return $this->preco;
+        return $this->precoCompra;
     }
     public function getPrecoVenda(){
-        return $this->preco;
+        return $this->precoVenda;
     }
     public function getData(){
         return $this->data;
@@ -55,11 +61,15 @@ class editarController {
         return $this->flag;
     }
 
+    public function getId(){
+        return $this->id;
+    }
+
 
 }
 $id = filter_input(INPUT_GET, 'id');
 $editar = new editarController($id);
 if(isset($_POST['submit'])){
-    $editar->editarFormulario($_POST['nome'],$_POST['laboratorio'],$_POST['quantidade'],$_POST['precoCompra'],$_POST['precoVenda'],$_POST['data'],$_POST['flag'],$_POST['id']);
+    $editar->editarFormulario($_POST['nome'],$_POST['laboratorio'],$_POST['quantidade'],$_POST['precoCompra'],$_POST['precoVenda'],$_POST['data'],$_POST['flag'],$_POST['idMed']);
 }
 ?>

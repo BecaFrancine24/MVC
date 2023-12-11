@@ -1,37 +1,12 @@
 <!DOCTYPE HTML>
     <html>
     <?php include("head.php") ?>
-    <script language="javascript" type="text/javascript">
-    function validar(formulario) {
-        var quantidade = form.quantidade.value;
-        var preco = form.preco.value;
-        for (i = 0; i <= formulario.length - 2; i++) {
-            if ((formulario[i].value == "")) {
-                alert("Preencha o campo " + formulario[i].name);
-                formulario[i].focus();
-                return false;
-            }
-        }
-        if (quantidade <= 0) {
-            alert('A quantidade de medicamentos não pode ser igual ou inferior a 0');
-            form.quantidade.focus();
-            return false;
-        }
-        if (preco <= 0) {
-            alert('O preço do medicamentos não pode ser igual ou infeiror a 0');
-            form.preco.focus();
-            return false;
-        }
-        formulario.submit();
-    }
-    </script>
-
     <body>
         <?php include("telaPrincipal.php") ?>
         <?php require_once("../controller/EditaController.php");?>
         <div class="container-fluid mt-3">
             <div class="row">
-                <form method="post" action="../controller/EditaController.php" id="form" name="form"
+                <form method="post" action="../controller/EditaController.php?id=<?php echo $editar->getId();?>" id="form" name="form"
                     onsubmit="validar(document.form); return false;" class="col-12">
                     <div class="form-row">
                         <div class="col-9">
@@ -64,6 +39,7 @@
                             <input class="form-control" type="number" id="precoVenda" name="precoVenda"
                                 value="<?php echo $editar->getPrecoVenda(); ?>" required>
                         </div>
+                        <br>
                         <select name="flag">
                             <?php $c = $editar->getFlag();?>
                             <option value="<?php echo $editar->getFlag();?>">
@@ -74,12 +50,52 @@
                     </div>
                     <br>
                     <div class="form-group">
-                        <input type="hidden" name="id" value="<?php echo $editar->getNome();?>">
+                        <input type="hidden" name="nomeMedicamento" value="<?php echo $editar->getNome();?>">
+                        <input type="hidden" name="idMed" value="<?php echo $editar->getId();?>">
                         <button type="submit" class="btn btn-success" id="editar" name="submit"
                             value="editar">Editar</button>
                     </div>
                 </form>
             </div>
         </div>
+        <script language="javascript" type="text/javascript">
+            function validar(formulario) {
+                var quantidade = form.quantidade.value;
+                var preco = form.preco.value;
+                for (i = 0; i <= formulario.length - 2; i++) {
+                    if ((formulario[i].value == "")) {
+                        alert("Preencha o campo " + formulario[i].name);
+                        formulario[i].focus();
+                        return false;
+                    }
+                }
+                if (quantidade <= 0) {
+                    alert('A quantidade de medicamentos não pode ser igual ou inferior a 0');
+                    form.quantidade.focus();
+                    return false;
+                }
+                if (preco <= 0) {
+                    alert('O preço do medicamentos não pode ser igual ou infeiror a 0');
+                    form.preco.focus();
+                    return false;
+                }
+                formulario.submit();
+            }
+            function formatarMoeda() {
+                    var elemento = document.getElementById('precoCompra');
+                    var valor = precoCompra.value;
+
+                    valor = valor + '';
+                    valor = parseInt(valor.replace(/[\D]+/g, ''));
+                    valor = valor + '';
+                    valor = valor.replace(/([0-9]{2})$/g, ",$1");
+
+                    if (valor.length > 6) {
+                        valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+                    }
+
+                    elemento.value = valor;
+                }
+        </script>
     </body>
 </html>

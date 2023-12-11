@@ -17,11 +17,11 @@ class listarController{
             echo "<th>".$value['nome'] ."</th>";
             echo "<td>".$value['laboratorio'] ."</td>";
             echo "<td>".$value['quantidade'] ."</td>";
-            echo "<td> R$:".$value['precoCompra'] ."</td>";
-            echo "<td> R$:".$value['precoVenda'] ."</td>";
+            echo "<td> R$".$value['precoCompra'] ."</td>";
+            echo "<td> R$".$value['precoVenda'] ."</td>";
             echo "<td>".$value['data'] ."</td>";
             echo "<td>".$value['flag'] = ($value['flag'] == "0") ? "Desativado":"Ativado" ."</td>";
-            echo "<td><a class='btn btn-warning' href='editaMedicamento.php?id=".$value['nome']."'>Editar</a><a class='btn btn-danger' href='../controller/DeletarController.php?id=".$value['nome']."'>Excluir</a></td>";
+            echo "<td><a class='btn btn-warning' href='editaMedicamento.php?id=".$value['idmedicamentos']."'>Editar</a><a class='btn btn-danger' href='../controller/DeletarController.php?id=".$value['idmedicamentos']."'>Excluir</a></td>";
             echo "</tr>";
         }
     }

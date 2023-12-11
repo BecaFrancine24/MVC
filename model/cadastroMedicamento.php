@@ -1,5 +1,5 @@
 <?php
-require_once("banco.php");
+require_once("bancoDeDados.php");
 
 class Cadastro extends Banco {
 
@@ -44,10 +44,10 @@ class Cadastro extends Banco {
         return $this->quantidade;
     }
     public function getPrecoCompra(){
-        return $this->preco;
+        return $this->precoCompra;
     }
     public function getPrecoVenda(){
-        return $this->preco;
+        return $this->precoVenda;
     }
     public function getFlag(){
         return $this->flag;
